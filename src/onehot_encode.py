@@ -5,11 +5,8 @@ from glob import glob
 import numpy as np
 from pathlib import Path
 
-DIR_DATA = Path('data')
-PATH_PREPROCESSED = DIR_DATA/'preprocessed.csv'
 
-def main(infile):
-    DIR_DATA.mkdir(exist_ok=True)
+def main(infile, path_onehot):
     ### Principal Dataset
     print(f'Reading {infile}...')
     data = pd.read_csv(infile)
@@ -67,6 +64,5 @@ def main(infile):
                 Light_Partial[str(new_col)] = 0
 
     onehot_encoded = pd.concat([Heavy_Partial, Light_Partial], axis=1)
-    # preprocessed_input = pd.concat()
-    preprocessed_input = onehot_encoded
-    preprocessed_input.to_csv(PATH_PREPROCESSED, index=False)
+    onehot_encoded.to_csv(path_onehot, index=False)
+    return onehot_encoded
