@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 .DS_Store
-submission/data
+data/
+Pse-in-One-2.0/psiblast/
