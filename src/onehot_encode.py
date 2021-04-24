@@ -10,28 +10,10 @@ def main(infile, path_onehot):
     ### Principal Dataset
     print(f'Reading {infile}...')
     data = pd.read_csv(infile)
-    # Alias when not using sequence features.
+
+    # Aliases.
     Heavy_Partial = data[['Hchain']].copy()
     Light_Partial = data[['Lchain']].copy()
-
-    # ### Load New columns
-    # SeqsHeavy = pd.read_csv('SeqsHeavyRenan.csv')
-    # SeqsLight = pd.read_csv('SeqsLightRenan.csv')
-    # SeqsHeavy = SeqsHeavy.drop('Unnamed: 0', axis=1)
-    # SeqsLight = SeqsLight.drop('Unnamed: 0', axis=1)
-    # ACC_Heavy = pd.read_csv('ACC_data_heavy.zip')
-    # ACC_Light = pd.read_csv('ACC_data_light.zip')
-
-    # #### Join Columns
-    # Heavy_Partial = pd.concat([SeqsHeavy, ACC_Heavy],
-    #                            axis=1)
-    # Heavy_Partial['Hchain'] = result_df['Hchain']
-    # Heavy_Shuffled_Partial = pd.concat([SeqsHeavy, ACC_Heavy],
-    #                            axis=1)
-    # Heavy_Shuffled_Partial['Hchain'] = result_df['Hchain']
-    # Light_Partial = pd.concat([SeqsLight, ACC_Light],
-    #                            axis=1)
-    # Light_Partial['Lchain'] = result_df['Lchain']
 
     #### Get_dummies For Sequence
     print('One-hot encoding sequences...')
@@ -49,7 +31,7 @@ def main(infile, path_onehot):
     Light_Partial = Light_Partial.add_suffix('_light')
 
     POSITION = list(range(0, 151))
-    AMINO = ['A','R','N','D','C','E','Q','G','H','I','L','K','M','F','P','S','T','W','Y','V']
+    AMINO = 'ARNDCEQGHILKMFPSTWYV'
 
     for i in POSITION:
         for j in AMINO:

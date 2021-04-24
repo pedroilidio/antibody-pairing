@@ -131,3 +131,7 @@ dmypy.json
 .DS_Store
 data/
 Pse-in-One-2.0/psiblast/
+train_data/
+preprocessed_input/
+data/
+data
