@@ -2,8 +2,6 @@ FROM continuumio/miniconda3
 
 WORKDIR /home/biolib
 
-RUN apt-get install python-pip
-RUN pip install numpy
 RUN conda install -c bioconda --yes anarci scikit-learn pandas numpy lightgbm\
     && \
     conda clean -afy

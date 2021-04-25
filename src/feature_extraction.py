@@ -31,9 +31,9 @@ def main(input_path, dir_data, path_features, dir_pseinone):
 
     path_acc = dir_pseinone/'acc.py'
     print('Running Pse-in-One 2.0 for HEAVY chains...')
-    os.system(f"python2 {path_acc} {dir_data}/fasta_heavy.fa Protein ACC -out {dir_data}/fasta_heavy_ACC.out")
+    os.system(f"python3 {path_acc} {dir_data}/fasta_heavy.fa Protein ACC -out {dir_data}/fasta_heavy_ACC.out")
     print('Running Pse-in-One 2.0 for LIGHT chains...')
-    os.system(f"python2 {path_acc} {dir_data}/fasta_light.fa Protein ACC -out {dir_data}/fasta_light_ACC.out")
+    os.system(f"python3 {path_acc} {dir_data}/fasta_light.fa Protein ACC -out {dir_data}/fasta_light_ACC.out")
 
     ACC_heavy = pd.read_csv(dir_data/"fasta_heavy_ACC.out", sep='\t', header=None)
     ACC_light = pd.read_csv(dir_data/"fasta_light_ACC.out", sep='\t', header=None)
