@@ -20,6 +20,7 @@ def preprocess(infile, path_onehot=PATH_ONEHOT,
                dir_pseinone=DIR_PSEINONE,
                path_preprocessed=PATH_PREPROCESSED):
 
+    dir_data.mkdir(exist_ok=True)
     onehot_encoded = onehot_encode.main(infile, path_onehot)
     seq_features = feature_extraction.main(infile, dir_data,
                                            path_features, dir_pseinone)
