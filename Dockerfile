@@ -2,7 +2,7 @@ FROM continuumio/miniconda3
 
 WORKDIR /home/biolib
 
-RUN conda install -c bioconda --yes anarci scikit-learn pandas numpy lightgbm xgboost\
+RUN conda install -c bioconda --yes anarci scikit-learn pandas lightgbm xgboost\
     && \
     conda clean -afy
 
