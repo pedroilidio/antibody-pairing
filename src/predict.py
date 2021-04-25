@@ -2,6 +2,7 @@ import joblib
 import pandas as pd
 import onehot_encode
 import feature_extraction
+import feature_extraction_PDT
 from pathlib import Path
 from argparse import ArgumentParser
 
@@ -13,7 +14,8 @@ PATH_PREPROCESSED = DIR_DATA/'preprocessed.csv'
 # PATH_MODEL = 'models/LightGBM_NT.pkl'  # Only receives 1hot seqs.
 # PATH_MODEL = 'models/LightGBM_NT.pkl'
 # PATH_MODEL = 'models/RandomForest_90est_30depth.pkl'
-PATH_MODEL = 'models/XGBoost_90est_10maxdepth.pkl'
+# PATH_MODEL = 'models/XGBoost_90est_10maxdepth.pkl'
+PATH_MODEL = 'LightGBM_NT_NO_DUMMY.pkl'  # Uses PDT.
 
 
 def preprocess(infile, path_onehot=PATH_ONEHOT,
@@ -30,12 +32,25 @@ def preprocess(infile, path_onehot=PATH_ONEHOT,
     return input_data
 
 
+def preprocess_PDT(infile, path_onehot=PATH_ONEHOT,
+                   dir_data=DIR_DATA, path_features=PATH_FEATURES,
+                   dir_pseinone=DIR_PSEINONE,
+                   path_preprocessed=PATH_PREPROCESSED):
+
+    dir_data.mkdir(exist_ok=True)
+    seq_features = feature_extraction_PDT.main(infile, dir_data,
+                                               path_features, dir_pseinone)
+    seq_features.to_csv(path_preprocessed, index=False)
+    return input_data
+
+
 def main():
     argparser = ArgumentParser()
     argparser.add_argument('--infile', dest='infile', required=True)
     args = argparser.parse_args()
 
-    input_data = preprocess(args.infile)
+    # input_data = preprocess(args.infile)
+    input_data = preprocess_PDT(args.infile)
 
     print('Loading model...')
     with open(PATH_MODEL, 'rb') as model_file:
