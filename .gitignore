@@ -129,10 +129,9 @@ dmypy.json
 .pyre/
 
 .DS_Store
-data/
+
+# Big and leftover files
 Pse-in-One-2.0/psiblast/
 train_data/
 preprocessed_input/
-data/
-data
 predictions.csv
