@@ -324,7 +324,7 @@ def pdt_cmd(inputfile, lamada):
     else:
         pdt_cmd = './pdt/pdt'
         #os.chmod(pdt_cmd, stat.S_IRWXU)
-        os.chmod(pdt_cmd, 0777)
+        os.chmod(pdt_cmd, 777)
 
     input_file = inputfile
     aaindex_file = './pdt/aaindex_norm.txt'
@@ -332,7 +332,7 @@ def pdt_cmd(inputfile, lamada):
     output_file = ''.join([os.path.splitext(input_file)[0], '_temp', os.path.splitext(input_file)[1]])
 
     cmd = ''.join([pdt_cmd, ' ', input_file, ' ', aaindex_file, ' ', lamada_param, ' ', output_file])
-    #print cmd
+    #print(cmd)
     subprocess.call(cmd, shell=True)
     return os.path.abspath(output_file)
 
@@ -354,7 +354,7 @@ def pdt(inputfile, lamada):
             temp_list = line.strip().split('\t')
             vector = [round(float(elem), 3) for elem in temp_list]
             vector_list.append(vector)
-    #print vector_list
+    #print(vector_list)
     return vector_list
 
 
@@ -369,19 +369,19 @@ def main(args):
     label_list = args.labels
     output_format = args.f
     if len(file_list) == 0:
-        print 'Input files not found.'
+        print('Input files not found.')
         return False
     if output_format == 'svm' and len(label_list) == 0:
-        print 'The labels of the input files should be set.'
+        print('The labels of the input files should be set.')
         return False
     if output_format == 'svm' and len(file_list) != len(label_list):
-        print 'The number of labels should be the same as that of the input files.'
+        print('The number of labels should be the same as that of the input files.')
         return False
 
     if args.out is not None:
         outputfile_list = args.out
         if len(outputfile_list) != len(file_list):
-            print 'The number of output files should be the same as that of input files.'
+            print('The number of output files should be the same as that of input files.')
             return False
     elif args.out is None:
         outputfile_list = []
@@ -431,7 +431,7 @@ def main(args):
                     alphabet_list = index_list.PROTEIN
                     default_e = const.INDS_3_PROTEIN
                 else:
-                    print 'The alphabet should be DNA, RNA or Protein.'
+                    print('The alphabet should be DNA, RNA or Protein.')
                     return False
 
                 theta_type = 1
@@ -458,7 +458,7 @@ def main(args):
 
     if args.method.upper() in ['MAC', 'GAC', 'NMBAC']:
         if args.lamada < 0 or args.lamada > 10:
-            print 'The value of lamada should be larger than 0 and smaller than 10.'
+            print('The value of lamada should be larger than 0 and smaller than 10.')
             return False
         if args.a is None:
             args.a == False
@@ -495,11 +495,11 @@ def main(args):
 
     if args.method.upper() == 'PDT':
         if args.alphabet != 'Protein':
-            print 'PDT method is only available for Protein sequences.'
+            print('PDT method is only available for Protein sequences.')
             return False
         else:
             if args.lamada < 1 or args.lamada > 15:
-                print 'The value of -lamada should be larger than 0 and smaller than 16.'
+                print('The value of -lamada should be larger than 0 and smaller than 16.')
                 return False
             else:
                 for input_file, output_file, label in zip(file_list, outputfile_list, label_list):
@@ -511,8 +511,8 @@ def main(args):
             out_with_full_path = os.path.abspath(output_file)
             if os.path.isfile(out_with_full_path):
                 if index == 0:
-                    print 'The output file(s) can be found here:'
-                print out_with_full_path
+                    print('The output file(s) can be found here:')
+                print(out_with_full_path)
 
 
 

@@ -188,7 +188,7 @@ def make_kmer_vector_ID(seq_list, kmer_list, rev_kmer_list, k, upto, revcomp, no
             for j in range(index[i], index[i + 1]):
                 kmer = kmer_list[j]
                 temp_count = frequency(seq, kmer)
-                # print temp_count
+                # print(temp_count)
                 if revcomp:
                     rev_kmer = find_revcomp(kmer, {})
                     if kmer <= rev_kmer:
@@ -230,9 +230,9 @@ def make_kmer_vector_ID(seq_list, kmer_list, rev_kmer_list, k, upto, revcomp, no
 
         vector.append(temp_vec)
     # if 0 != len(rev_kmer_list):
-    #     print "The kmer is", rev_kmer_list
+    #     print("The kmer is", rev_kmer_list)
     # else:
-    #     print "The kmer is", kmer_list
+    #     print("The kmer is", kmer_list)
     return vector
 
 
@@ -254,11 +254,11 @@ def id_x_s(vec_x, vec_s, diversity_s):
     :param vec_s: kmer S
     :return: ID(X, S) = Diversity(X + S) - Diversity(X) - Diversity(S)
     """
-    # print 'vec_x', vec_x
-    # print 'vec_s', vec_s
+    # print('vec_x', vec_x)
+    # print('vec_s', vec_s)
     vec_x_s = [sum(e) for e in zip(vec_x, vec_s)]
-    # print 'vec_x_s', vec_x_s
-    # print diversity(vec_x_s), diversity(vec_x), diversity_s
+    # print('vec_x_s', vec_x_s)
+    # print(diversity(vec_x_s), diversity(vec_x), diversity_s)
     return diversity(vec_x_s) - diversity(vec_x) - diversity_s
 
 
@@ -302,13 +302,13 @@ class IDkmer():
 
         pos_s_list = get_data(hs, self.alphabet)
         neg_s_list = get_data(non_hs, self.alphabet)
-        # print self.k
+        # print(self.k)
         if self.upto is False:
             k_list = [self.k]
         else:
             k_list = list(range(1, self.k+1))
 
-        # print 'k_list =', k_list
+        # print('k_list =', k_list)
 
         # Get all kmer ID from 1-kmer to 6-kmer.
         # Calculate standard source S vector.
@@ -334,22 +334,22 @@ class IDkmer():
         vec = []
 
         for seq in sequence_list:
-            # print seq
+            # print(seq)
             temp_vec = []
             for k in k_list:
                 kmer_list = make_kmer_list(k, self.alphabet)
                 seq_list = [seq]
                 kmer_vec = make_kmer_vector_ID(seq_list, kmer_list, rev_kmer_list, k, upto, revcomp, normalize)
-                # print 'k', k
-                # print 'kmer_vec', kmer_vec
+                # print('k', k)
+                # print('kmer_vec', kmer_vec)
 
-                # print diversity_pos_s
+                # print(diversity_pos_s)
                 if upto is False:
                     k = 1
 
-                # print 'pos_vec', pos_s_vec
-                # print 'neg_vec', neg_s_vec
-                # print 'diversity_pos_s', diversity_pos_s
+                # print('pos_vec', pos_s_vec)
+                # print('neg_vec', neg_s_vec)
+                # print('diversity_pos_s', diversity_pos_s)
 
                 temp_vec.append(round(id_x_s(kmer_vec[0], pos_s_vec[k-1], diversity_pos_s[k-1]), 3))
                 temp_vec.append(round(id_x_s(kmer_vec[0], neg_s_vec[k-1], diversity_neg_s[k-1]), 3))
@@ -624,7 +624,7 @@ def main(args):
     elif args.alphabet == 'Protein':
         args.alphabet = index_list.PROTEIN
     else:
-        print 'The alphabet should be DNA, RNA or Protein.'
+        print('The alphabet should be DNA, RNA or Protein.')
         return False
 
     file_list = args.inputfiles
@@ -632,19 +632,19 @@ def main(args):
     label_list = args.labels
     output_format = args.f
     if len(file_list) == 0:
-        print 'Input files not found.'
+        print('Input files not found.')
         return False
     if output_format == 'svm' and len(label_list) == 0:
-        print 'The labels of the input files should be set.'
+        print('The labels of the input files should be set.')
         return False
     if output_format == 'svm' and len(file_list) != len(label_list):
-        print 'The number of labels should be the same as that of the input files.'
+        print('The number of labels should be the same as that of the input files.')
         return False
 
     if args.out is not None:
         outputfile_list = args.out
         if len(outputfile_list) != len(file_list):
-            print 'The number of output files should be the same as that of input files.'
+            print('The number of output files should be the same as that of input files.')
             return False
     elif args.out is None:
         outputfile_list = []
@@ -670,55 +670,55 @@ def main(args):
 
     if args.method.upper() == 'KMER':
         if args.k is None:
-            print "parameters k is required. The default value of k is 2."
+            print("parameters k is required. The default value of k is 2.")
             args.k = 2
         if args.r is None:
-            print "parameters r is required. The default value of r is 0."
+            print("parameters r is required. The default value of r is 0.")
             args.r = 0
         for input_file, output_file, label in zip(file_list, outputfile_list, label_list):
             res = make_kmer_vector(k=args.k, alphabet=args.alphabet, filename=input_file, revcomp=args.r)
             write_to_file(res, output_format, label, output_file)
     elif args.method.upper() == 'IDKMER':
         if args.k is None:
-            print "parameters k is required. The default value of k is 6."
+            print("parameters k is required. The default value of k is 6.")
             args.k = 6
         if args.ps is None or args.ns is None:
-            print 'The positive  and the negative source files are required.'
+            print('The positive  and the negative source files are required.')
             return False
         for input_file, output_file, label in zip(file_list, outputfile_list, label_list):
             res = idkmer(k=args.k, filename=input_file, pos_src_name=args.ps, neg_src_name=args.ns)
             write_to_file(res, output_format, label, output_file)
     elif args.method.upper() == "MISMATCH":
         if args.k is None:
-            print "parameters k is required. The default value of k is 3."
+            print("parameters k is required. The default value of k is 3.")
             args.k = 3
         if args.m is None:
-            print "parameters m is required. The default value of m is 1."
+            print("parameters m is required. The default value of m is 1.")
             args.m = 1
         if args.m >= args.k:
-            print "parameters m should be less than parameter k."
+            print("parameters m should be less than parameter k.")
         else:
             for input_file, output_file, label in zip(file_list, outputfile_list, label_list):
                 res = getMismatchProfileMatrix(input_file, args.alphabet, args.k, args.m)
                 write_to_file(res, output_format, label, output_file)
     elif args.method.upper() == "SUBSEQUENCE":
         if args.delta is None:
-            print "parameters delta is required. The default value of delta is 1."
+            print("parameters delta is required. The default value of delta is 1.")
             args.delta = 1
         elif args.delta > 1 or args.delta < 0:
-            print "delta should be greater than or equal to 0 and less than or equal to 1."
+            print("delta should be greater than or equal to 0 and less than or equal to 1.")
         if args.k is None:
-            print "parameters k is required. The default value of k is 3."
+            print("parameters k is required. The default value of k is 3.")
             args.k = 3
         for input_file, output_file, label in zip(file_list, outputfile_list, label_list):
             res = getSubsequenceProfileByParallel(filename=input_file, alphabet=args.alphabet, k=args.k, delta=args.delta)
             write_to_file(res, output_format, label, output_file)
     elif args.method.upper() == 'DR':
         if args.alphabet != index_list.PROTEIN:
-            print 'DR method is only available for Protein.'
+            print('DR method is only available for Protein.')
             return False
         elif args.max_dis < 0 or args.max_dis > 10:
-            print 'The max distance can not be negative integer and should be smaller than 11.'
+            print('The max distance can not be negative integer and should be smaller than 11.')
             return False
         else:
             for input_file, output_file, label in zip(file_list, outputfile_list, label_list):
@@ -726,10 +726,10 @@ def main(args):
                 write_to_file(res, output_format, label, output_file)
     elif args.method.upper() == 'DP':
         if args.alphabet != index_list.PROTEIN:
-            print 'Distance Pair method is only available for Protein.'
+            print('Distance Pair method is only available for Protein.')
             return False
         elif args.max_dis < 0 or args.max_dis > 10:
-            print 'The max distance can not be negative integer and should be smaller than 11.'
+            print('The max distance can not be negative integer and should be smaller than 11.')
             return False
         else:
             if args.cp == 'cp_13':
@@ -753,8 +753,8 @@ def main(args):
             out_with_full_path = os.path.abspath(output_file)
             if os.path.isfile(out_with_full_path):
                 if index == 0:
-                    print 'The output file(s) can be found here:'
-                print out_with_full_path
+                    print('The output file(s) can be found here:')
+                print(out_with_full_path)
 
 
 

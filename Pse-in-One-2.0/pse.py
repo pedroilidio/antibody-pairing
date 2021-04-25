@@ -397,19 +397,19 @@ def main(args):
     label_list = args.labels
     output_format = args.f
     if len(file_list) == 0:
-        print 'Input files not found.'
+        print('Input files not found.')
         return False
     if output_format == 'svm' and len(label_list) == 0:
-        print 'The labels of the input files should be set.'
+        print('The labels of the input files should be set.')
         return False
     if output_format == 'svm' and len(file_list) != len(label_list):
-        print 'The number of labels should be the same as that of the input files.'
+        print('The number of labels should be the same as that of the input files.')
         return False
 
     if args.out is not None:
         outputfile_list = args.out
         if len(outputfile_list) != len(file_list):
-            print 'The number of output files should be the same as that of input files.'
+            print('The number of output files should be the same as that of input files.')
             return False
     elif args.out is None:
         outputfile_list = []
@@ -489,8 +489,8 @@ def main(args):
             out_with_full_path = os.path.abspath(output_file)
             if os.path.isfile(out_with_full_path):
                 if index == 0:
-                    print 'The output file(s) can be found here:'
-                print out_with_full_path
+                    print('The output file(s) can be found here:')
+                print(out_with_full_path)
 
 
 
