@@ -12,7 +12,8 @@ PATH_FEATURES = DIR_DATA/'sequence_features.csv'
 PATH_PREPROCESSED = DIR_DATA/'preprocessed.csv'
 # PATH_MODEL = 'models/LightGBM_NT.pkl'  # Only receives 1hot seqs.
 # PATH_MODEL = 'models/LightGBM_NT.pkl'
-PATH_MODEL = 'models/RandomForest_90est_30depth.pkl'
+# PATH_MODEL = 'models/RandomForest_90est_30depth.pkl'
+PATH_MODEL = 'models/XGBoost_90est_10maxdepth.pkl'
 
 
 def preprocess(infile, path_onehot=PATH_ONEHOT,
