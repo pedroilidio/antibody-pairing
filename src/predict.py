@@ -42,8 +42,8 @@ def main():
 
     print('Predicting values...')
     apreds = model.predict_proba(input_data)
-    # predictions = pd.Series(((1-apreds[:,0]) + apreds[:,1])/2)
-    predictions = pd.Series(((1-apreds[:,1]) + apreds[:,0])/2)
+    predictions = pd.Series(((1-apreds[:,0]) + apreds[:,1])/2)
+    # predictions = pd.Series(((1-apreds[:,1]) + apreds[:,0])/2)
     predictions.name = 'prediction'
     predictions.to_csv('predictions.csv', index=False)
     print('Done.')
