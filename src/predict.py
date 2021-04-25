@@ -10,8 +10,9 @@ DIR_DATA = Path('preprocessed_input')
 PATH_ONEHOT = DIR_DATA/'onehot_encoded.csv'
 PATH_FEATURES = DIR_DATA/'sequence_features.csv'
 PATH_PREPROCESSED = DIR_DATA/'preprocessed.csv'
-#PATH_MODEL = 'models/LightGBM_NT.pkl'  # Only receives 1hot seqs.
-PATH_MODEL = 'models/LightGBM_NT.pkl'
+# PATH_MODEL = 'models/LightGBM_NT.pkl'  # Only receives 1hot seqs.
+# PATH_MODEL = 'models/LightGBM_NT.pkl'
+PATH_MODEL = 'models/RandomForest_90est_30depth.pkl'
 
 
 def preprocess(infile, path_onehot=PATH_ONEHOT,
@@ -40,7 +41,8 @@ def main():
 
     print('Predicting values...')
     apreds = model.predict_proba(input_data)
-    predictions = pd.Series(((1-apreds[:,0]) + apreds[:,1])/2)
+    # predictions = pd.Series(((1-apreds[:,0]) + apreds[:,1])/2)
+    predictions = pd.Series(((1-apreds[:,1]) + apreds[:,0])/2)
     predictions.name = 'prediction'
     predictions.to_csv('predictions.csv', index=False)
     print('Done.')

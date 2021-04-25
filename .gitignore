@@ -135,3 +135,4 @@ train_data/
 preprocessed_input/
 data/
 data
+predictions.csv
